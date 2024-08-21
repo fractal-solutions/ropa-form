@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Records of Processing Activities</title>
     <style>
+
+        /* Animation for appearing */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for disappearing */
+        @keyframes fadeOutDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
         body {
             font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
             background: linear-gradient(to bottom, #3b5998, #192f60);
@@ -19,19 +44,21 @@
             min-height: 700px;
             margin: 0 auto;
             padding: 20px;
-            background: #2c3e50;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             position: relative;
+            background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
         }
 
         .tableContainer {
             display: none;
             margin: 0 auto;
-            padding: 20px;
-            background: #2c3e50;
+            padding: 0px;
+            padding-top: 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             position: relative;
         }
 
@@ -41,6 +68,8 @@
         }
 
         .form-segment {
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
             display: none;
         }
 
@@ -89,6 +118,15 @@
             width: auto; /* Ensure that the checkbox doesn't get affected by parent width */
         }
 
+        .warning::placeholder{
+            color:#ff0000;
+            
+        }
+
+        .warning::disabled {
+            background-color: #5b0000d3;
+        }
+
 
         .navigation {
             display: flex;
@@ -112,6 +150,18 @@
             border-radius: 10px;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .navigation button:hover {
+            background: linear-gradient(to bottom, #1c598a, #143d63); /* Darker on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+        }
+
+        .navigation button:active {
+            transform: scale(0.95); /* Slightly shrink on click */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Smaller shadow on click */
         }
 
         .navigation button:disabled {
@@ -119,18 +169,25 @@
             cursor: not-allowed;
         }
 
+
+
+        /* Container for the progress bar */
         .progress-bar {
             width: 100%;
-            background: #7f8c8d;
-            border-radius: 10px;
+            background: #ecf0f1;
+            border-radius: 20px; /* Rounded corners */
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for depth */
         }
 
+        /* Fill progress */
         .progress {
-            width: 0;
-            height: 8px;
-            background: #3498db;
+            height: 10px; /* Slightly thicker */
+            background: linear-gradient(45deg, #3498db, #2ecc71); /* Gradient background */
+            border-radius: 20px; /* Match border radius with container */
+            transition: width 0.4s ease-in-out; /* Smooth transition for width change */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
         }
 
         .wrapper {
@@ -139,11 +196,15 @@
         }
 
         .sidebar {
-            width: 200px;
-            background: #2c3e50;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 250px; /* Slightly wider for more space */
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+            border-radius: 8px; /* Rounded corners */
             flex-shrink: 0;
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -164,11 +225,23 @@
             border-radius: 5px;
             background: linear-gradient(to bottom, #2980b9, #1c598a);
             text-align: center;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar ul li a:hover {
-            background: #1c598a;
+            background: linear-gradient(to bottom, #1c598a, #143d63); /* Darker on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            transform: translateX(5px); /* Slide effect on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
         }
+
+        .sidebar ul li a:active {
+            transform: scale(0.95); /* Slightly shrink on click */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Smaller shadow on click */
+            font-weight: bold;
+        }
+
 
         .content {
             flex-grow: 1;
@@ -205,6 +278,10 @@
             background: #3b5998;
         }
 
+        .hide-column {
+            display: none;
+        }
+
 
     </style>
 </head>
@@ -224,19 +301,20 @@
                     <div class="progress"></div>
                 </div>
                 <form id="ropaForm">
+                    
                     <!-- Segment 1 -->
                     <div class="form-segment active">
                         <div class="input-group">
                             <label for="processingActivity">Processing Activity</label>
-                            <textarea id="processingActivity" name="processingActivity" placeholder="What processing activity are we undertaking on the data? A processing activity is any action or series of actions performed on data, especially personal data.  This definition is meant to be broad and encompass pretty much anything you can do with data. Because this is a ROPA, Assess each processing activity separately...."></textarea>
+                            <textarea id="processingActivity" name="processingActivity" placeholder="What processing activity are we undertaking on the data? A processing activity is any action or series of actions performed on data, especially personal data.  This definition is meant to be broad and encompass pretty much anything you can do with data. Because this is a ROPA, Assess each processing activity separately..." required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="sourceReceivedFrom">Source Received from</label>
-                            <input type="text" id="sourceReceivedFrom" name="sourceReceivedFrom" placeholder="Where did you source this data from?">
+                            <input type="text" id="sourceReceivedFrom" name="sourceReceivedFrom" placeholder="Where did you source this data from?" required>
                         </div>
                         <div class="input-group">
                             <label for="data">Data</label>
-                            <input type="text" id="data" name="data" placeholder="What data are you dealing with?">
+                            <input type="text" id="data" name="data" placeholder="What data are you dealing with?" required>
                         </div>
                     </div>
 
@@ -244,15 +322,15 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="purpose">Purpose</label>
-                            <textarea id="purpose" name="purpose" placeholder="Why are you dealing with this data? E.g we need to provided medical care or we need to process employment applications"></textarea>
+                            <textarea id="purpose" name="purpose" placeholder="Why are you dealing with this data? E.g we need to provided medical care or we need to process employment applications" required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="sharedWith">Shared with</label>
-                            <input type="text" id="sharedWith" name="sharedWith" placeholder="Who are you sharing this information with?">
+                            <input type="text" id="sharedWith" name="sharedWith" placeholder="Who are you sharing this information with?" required>
                         </div>
                         <div class="input-group">
                             <label for="dataSubject">Data Subject</label>
-                            <input type="text" id="dataSubject" name="dataSubject" placeholder="Whose data is this?">
+                            <input type="text" id="dataSubject" name="dataSubject" placeholder="Whose data is this?" required>
                         </div>
                     </div>
 
@@ -260,15 +338,15 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="typeOfRecord">TYPE OF RECORD</label>
-                            <input type="text" id="typeOfRecord" name="typeOfRecord" placeholder="What type of record is it?">
+                            <input type="text" id="typeOfRecord" name="typeOfRecord" placeholder="What type of record is it?" required>
                         </div>
                         <div class="input-group">
                             <label for="dataClassification">Data Classification</label>
-                            <input type="text" id="dataClassification" name="dataClassification" placeholder="What is the classification of this data?">
+                            <input type="text" id="dataClassification" name="dataClassification" placeholder="What is the classification of this data?" required>
                         </div>
                         <div class="input-group">
                             <label for="sensitiveData">Sensitive Data</label>
-                            <select id="sensitiveData" name="sensitiveData">
+                            <select id="sensitiveData" name="sensitiveData" required>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
@@ -279,14 +357,14 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="gchControllerProcessor">GCH is controller or processor?</label>
-                            <select id="gchControllerProcessor" name="gchControllerProcessor">
+                            <select id="gchControllerProcessor" name="gchControllerProcessor" required>
                                 <option value="controller">Controller</option>
                                 <option value="processor">Processor</option>
                             </select>
                         </div>
                         <div class="input-group">
                             <label for="thirdPartyControllerProcessor">Third Party is controller or processor?</label>
-                            <select id="thirdPartyControllerProcessor" name="thirdPartyControllerProcessor">
+                            <select id="thirdPartyControllerProcessor" name="thirdPartyControllerProcessor" required>
                                 <option value="controller">Controller</option>
                                 <option value="processor">Processor</option>
                             </select>
@@ -299,74 +377,45 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="basisOfProcessing">Basis of Processing</label>
-                            <div id="basisOfProcessing">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="consent" name="basisOfProcessing" value="consent">
-                                    <label for="consent">Consent</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="contract" name="basisOfProcessing" value="contract">
-                                    <label for="contract">Contract</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="legal-obligation" name="basisOfProcessing" value="legal-obligation">
-                                    <label for="legal-obligation">Legal obligation compliance</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="vital-interests" name="basisOfProcessing" value="vital-interests">
-                                    <label for="vital-interests">Protection of vital interests</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="public-interest-task" name="basisOfProcessing" value="public-interest-task">
-                                    <label for="public-interest-task">Task in public interest</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="public-authority-task" name="basisOfProcessing" value="public-authority-task">
-                                    <label for="public-authority-task">Task by public authority</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="public-function" name="basisOfProcessing" value="public-function">
-                                    <label for="public-function">Public function</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="legitimate-interests" name="basisOfProcessing" value="legitimate-interests">
-                                    <label for="legitimate-interests">Legitimate interests</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="research" name="basisOfProcessing" value="research">
-                                    <label for="research">Research, statistics, journalism, literature</label>
-                                </div>
-                            </div>
+                            <select id="basisOfProcessing" name="basisOfProcessing" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="consent">Consent</option>
+                                <option value="contract">Contract</option>
+                                <option value="legal-obligation">Legal obligation compliance</option>
+                                <option value="vital-interests">Protection of vital interests</option>
+                                <option value="public-interest-task">Task in public interest</option>
+                                <option value="public-authority-task">Task by public authority</option>
+                                <option value="public-function">Public function</option>
+                                <option value="legitimate-interests">Legitimate interests</option>
+                                <option value="research">Research, statistics, journalism, literature</option>
+                            </select>
                         </div>
-                        
 
-                    </div>
-
-
-                    <!-- Segment 6-->
-                    <div class="form-segment">
                         <div class="input-group">
                             <label for="justificationOfBasis">Justification of basis</label>
-                            <textarea id="justificationOfBasis" name="justificationOfBasis" placeholder="Why did you select the basis - what is proof of the basis?"></textarea>
+                            <textarea id="justificationOfBasis" name="justificationOfBasis" placeholder="Why did you select the basis - what is proof of the basis?" required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="legitimateInterest">LEGITIMATE INTEREST</label>
-                            <textarea id="legitimateInterest" name="legitimateInterest" placeholder="If the basis selected is legitimate interest, document in detail."></textarea>
+                            <textarea id="legitimateInterest" name="legitimateInterest" placeholder="If the basis selected is legitimate interest, document in detail." required></textarea>
                         </div>
-
                     </div>
 
-                    <!-- Segment 7 -->
+
+                    <!-- Segment X-->
+                    
+
+                    <!-- Segment 6 -->
                     <div class="form-segment">
                         
                         <div class="input-group">
                             <label for="impactOfProcessing">Impact of processing</label>
-                            <textarea id="impactOfProcessing" name="impactOfProcessing" placeholder="Have we done DPIA?"></textarea>
+                            <textarea id="impactOfProcessing" name="impactOfProcessing" placeholder="Have we done DPIA?" required></textarea>
                         </div>
 
                         <div class="input-group">
                             <label for="automatedDecisionMaking">Existence of automated decision-making, including profiling (if applicable)</label>
-                            <select id="automatedDecisionMaking" name="automatedDecisionMaking">
+                            <select id="automatedDecisionMaking" name="automatedDecisionMaking" required>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
@@ -374,19 +423,27 @@
 
                     </div>
 
-                    <!-- Segment 8 -->
+                    <!-- Segment 7 -->
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="transfer">TRANSFER</label>
-                            <textarea id="transfer" name="transfer" placeholder="Is there a transfer of the data involved?"></textarea>
+                            <textarea id="transfer" name="transfer" placeholder="Is there a transfer of the data involved?" required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="transferMechanism">TRANSFER MECHANISM</label>
-                            <textarea id="transferMechanism" name="transferMechanism" placeholder="How is data transfer undertaken?"></textarea>
+                            <textarea id="transferMechanism" name="transferMechanism" placeholder="How is data transfer undertaken?" required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="storage">Storage</label>
-                            <textarea id="storage" name="storage" placeholder="How long will the data be stored?"></textarea>
+                            <textarea id="storage" name="storage" placeholder="How long will the data be stored?" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SEGMENT 8-->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="transfer">YOU HAVE NOT COMPLETED REQUIRED VALUES FOR THE ROPA</label>
+                            <input class="warning" type="text" placeholder="Go back through the form and fill relevant data!" readonly required></textarea>
                         </div>
                     </div>
 
@@ -416,12 +473,12 @@
                             <th>GCH</th>
                             <th>Third-Party</th>
                             <th>Basis of Processing</th>
-                            <th>Justification of Basis</th>
-                            <th>Legitimate Interest</th>
-                            <th>Impact of Processing</th>
-                            <th>Automated Decision-Making</th>
-                            <th>Transfer</th>
-                            <th>Transfer Mechanism</th>
+                            <th class="hide-column">Justification of Basis</th>
+                            <th class="hide-column">Legitimate Interest</th>
+                            <th class="hide-column">Impact of Processing</th>
+                            <th class="hide-column">Automated Decision-Making</th>
+                            <th class="hide-column">Transfer</th>
+                            <th class="hide-column">Transfer Mechanism</th>
                             <th>Storage</th>
                         </tr>
                     </thead>
@@ -439,20 +496,33 @@
                 const nextBtn = document.querySelector('#nextBtn');
             
                 function showSegment(n) {
+                    // Hide the current segment
                     segments[currentSegment].classList.remove('active');
-                    currentSegment = currentSegment + n;
+                    
+                    // Move to the next/previous segment
+                    currentSegment += n;
+                    
+                    // Check if the segment is out of bounds
                     if (currentSegment >= segments.length) {
                         currentSegment = segments.length - 1;
-                        document.getElementById("ropaForm").submit(); // Trigger the form submission
-                        return false;
                     }
                     if (currentSegment < 0) {
                         currentSegment = 0;
                     }
+
+                    // Show the new segment
                     segments[currentSegment].classList.add('active');
+
+                    // Update buttons and progress
                     updateButtons();
                     updateProgress();
+
+                    // If on the last segment and moving forward, submit the form
+                    if (currentSegment === segments.length - 1 && n === 1) {
+                        //document.getElementById("ropaForm").submit(); // Trigger the form submission
+                    }
                 }
+
             
                 function changeSegment(n) {
                     showSegment(n);
@@ -460,8 +530,8 @@
             
                 function updateButtons() {
                     prevBtn.disabled = currentSegment === 0;
-                    nextBtn.textContent = currentSegment === segments.length - 1 ? 'Submit' : 'Next';
-                    currentSegment === segments.length - 1 ? nextBtn.type = 'submit' : nextBtn.type = 'button';
+                    nextBtn.textContent = currentSegment === (segments.length - 1) ? 'Submit' : 'Next';
+                    currentSegment === (segments.length - 1) ? nextBtn.type = 'submit' : nextBtn.type = 'button';
                 }
             
                 function updateProgress() {
@@ -525,6 +595,33 @@
             
                         tableBody.appendChild(row);
                     });
+
+                    hideColumns();
+                }
+                // Function to hide specific columns based on the index
+                function hideColumns() {
+                    var table = document.getElementById("entriesTable");
+                    var hideIndices = [];
+
+                    // Find the indices of the columns that should be hidden
+                    var headerCells = table.rows[0].cells;
+                    for (var i = 0; i < headerCells.length; i++) {
+                    if (headerCells[i].classList.contains("hide-column")) {
+                        hideIndices.push(i);
+                    }
+                    }
+
+                    // Hide the header columns
+                    for (var i = 0; i < hideIndices.length; i++) {
+                    headerCells[hideIndices[i]].style.display = "none";
+                    }
+
+                    // Hide the corresponding columns in the body rows
+                    for (var j = 1; j < table.rows.length; j++) { // Start from 1 to skip the header row
+                    for (var k = 0; k < hideIndices.length; k++) {
+                        table.rows[j].cells[hideIndices[k]].style.display = "none";
+                    }
+                    }
                 }
             </script>
             
