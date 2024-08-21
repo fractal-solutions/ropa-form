@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Records of Processing Activities</title>
+    <style>
+        body {
+            font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+            background: linear-gradient(to bottom, #3b5998, #192f60);
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            zoom: 0.7;
+        }
+
+        .container {
+            max-width: 600px;
+            min-height: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #2c3e50;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .tableContainer {
+            display: none;
+            margin: 0 auto;
+            padding: 20px;
+            background: #2c3e50;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-segment {
+            display: none;
+        }
+
+        .form-segment.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #ecf0f1;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 90%;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: 1px solid #7f8c8d;
+            background: #34495e;
+            color: #ecf0f1;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center; /* Aligns checkbox and label vertically */
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            transform: scale(0.8); /* Adjust the scale value as needed */
+            margin-right: 10px; /* Optional: add some space between checkbox and label */
+            width: auto; /* Ensure that the checkbox doesn't get affected by parent width */
+        }
+
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center; /* Center the buttons horizontally */
+            gap: 200px; 
+            bottom: 10px;
+        }
+
+        .navigation button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background: linear-gradient(to bottom, #2980b9, #1c598a);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navigation button:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #7f8c8d;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0;
+            height: 8px;
+            background: #3498db;
+        }
+
+        .wrapper {
+            display: flex;
+            min-height: 100vh; 
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #2c3e50;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #2980b9, #1c598a);
+            text-align: center;
+        }
+
+        .sidebar ul li a:hover {
+            background: #1c598a;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        thead {
+            background: #34495e;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #7f8c8d;
+        }
+
+        th {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tbody tr:hover {
+            background: #3b5998;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#" onclick="showForm()">ROPA Form</a></li>
+                <li><a href="#" onclick="showTable()">ROPA Entries</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <!-- ROPA FORM-->
+            <div class="container">
+                <h2>Record of Processing Activities</h2>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <form id="ropaForm">
+                    <!-- Segment 1 -->
+                    <div class="form-segment active">
+                        <div class="input-group">
+                            <label for="processingActivity">Processing Activity</label>
+                            <textarea id="processingActivity" name="processingActivity" placeholder="What processing activity are we undertaking on the data? A processing activity is any action or series of actions performed on data, especially personal data.  This definition is meant to be broad and encompass pretty much anything you can do with data. Because this is a ROPA, Assess each processing activity separately...."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="sourceReceivedFrom">Source Received from</label>
+                            <input type="text" id="sourceReceivedFrom" name="sourceReceivedFrom" placeholder="Where did you source this data from?">
+                        </div>
+                        <div class="input-group">
+                            <label for="data">Data</label>
+                            <input type="text" id="data" name="data" placeholder="What data are you dealing with?">
+                        </div>
+                    </div>
+
+                    <!-- Segment 2 -->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="purpose">Purpose</label>
+                            <textarea id="purpose" name="purpose" placeholder="Why are you dealing with this data? E.g we need to provided medical care or we need to process employment applications"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="sharedWith">Shared with</label>
+                            <input type="text" id="sharedWith" name="sharedWith" placeholder="Who are you sharing this information with?">
+                        </div>
+                        <div class="input-group">
+                            <label for="dataSubject">Data Subject</label>
+                            <input type="text" id="dataSubject" name="dataSubject" placeholder="Whose data is this?">
+                        </div>
+                    </div>
+
+                    <!-- Segment 3 -->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="typeOfRecord">TYPE OF RECORD</label>
+                            <input type="text" id="typeOfRecord" name="typeOfRecord" placeholder="What type of record is it?">
+                        </div>
+                        <div class="input-group">
+                            <label for="dataClassification">Data Classification</label>
+                            <input type="text" id="dataClassification" name="dataClassification" placeholder="What is the classification of this data?">
+                        </div>
+                        <div class="input-group">
+                            <label for="sensitiveData">Sensitive Data</label>
+                            <select id="sensitiveData" name="sensitiveData">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Segment 4 -->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="gchControllerProcessor">GCH is controller or processor?</label>
+                            <select id="gchControllerProcessor" name="gchControllerProcessor">
+                                <option value="controller">Controller</option>
+                                <option value="processor">Processor</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="thirdPartyControllerProcessor">Third Party is controller or processor?</label>
+                            <select id="thirdPartyControllerProcessor" name="thirdPartyControllerProcessor">
+                                <option value="controller">Controller</option>
+                                <option value="processor">Processor</option>
+                            </select>
+                        </div>
+                        
+                        
+                    </div>
+
+                    <!-- Segment 5 -->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="basisOfProcessing">Basis of Processing</label>
+                            <div id="basisOfProcessing">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="consent" name="basisOfProcessing" value="consent">
+                                    <label for="consent">Consent</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="contract" name="basisOfProcessing" value="contract">
+                                    <label for="contract">Contract</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="legal-obligation" name="basisOfProcessing" value="legal-obligation">
+                                    <label for="legal-obligation">Legal obligation compliance</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="vital-interests" name="basisOfProcessing" value="vital-interests">
+                                    <label for="vital-interests">Protection of vital interests</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="public-interest-task" name="basisOfProcessing" value="public-interest-task">
+                                    <label for="public-interest-task">Task in public interest</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="public-authority-task" name="basisOfProcessing" value="public-authority-task">
+                                    <label for="public-authority-task">Task by public authority</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="public-function" name="basisOfProcessing" value="public-function">
+                                    <label for="public-function">Public function</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="legitimate-interests" name="basisOfProcessing" value="legitimate-interests">
+                                    <label for="legitimate-interests">Legitimate interests</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="research" name="basisOfProcessing" value="research">
+                                    <label for="research">Research, statistics, journalism, literature</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+
+                    <!-- Segment 6-->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="justificationOfBasis">Justification of basis</label>
+                            <textarea id="justificationOfBasis" name="justificationOfBasis" placeholder="Why did you select the basis - what is proof of the basis?"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="legitimateInterest">LEGITIMATE INTEREST</label>
+                            <textarea id="legitimateInterest" name="legitimateInterest" placeholder="If the basis selected is legitimate interest, document in detail."></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- Segment 7 -->
+                    <div class="form-segment">
+                        
+                        <div class="input-group">
+                            <label for="impactOfProcessing">Impact of processing</label>
+                            <textarea id="impactOfProcessing" name="impactOfProcessing" placeholder="Have we done DPIA?"></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="automatedDecisionMaking">Existence of automated decision-making, including profiling (if applicable)</label>
+                            <select id="automatedDecisionMaking" name="automatedDecisionMaking">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Segment 8 -->
+                    <div class="form-segment">
+                        <div class="input-group">
+                            <label for="transfer">TRANSFER</label>
+                            <textarea id="transfer" name="transfer" placeholder="Is there a transfer of the data involved?"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="transferMechanism">TRANSFER MECHANISM</label>
+                            <textarea id="transferMechanism" name="transferMechanism" placeholder="How is data transfer undertaken?"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="storage">Storage</label>
+                            <textarea id="storage" name="storage" placeholder="How long will the data be stored?"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="navigation">
+                        <button type="button" id="prevBtn" onclick="changeSegment(-1)" disabled>Previous</button>
+                        <button type="button" id="nextBtn" onclick="changeSegment(1)">Next</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table to display submitted entries -->
+            <div class="tableContainer">
+                <h2>Submitted Entries</h2>
+                <table id="entriesTable">
+                    <thead>
+                        <tr>
+                            <th>Processing Activity</th>
+                            <th>Source Received From</th>
+                            <th>Data</th>
+                            <th>Purpose</th>
+                            <th>Shared With</th>
+                            <th>Data Subject</th>
+                            <th>Type of Record</th>
+                            <th>Data Classification</th>
+                            <th>Sensitive Data</th>
+                            <th>GCH</th>
+                            <th>Third-Party</th>
+                            <th>Basis of Processing</th>
+                            <th>Justification of Basis</th>
+                            <th>Legitimate Interest</th>
+                            <th>Impact of Processing</th>
+                            <th>Automated Decision-Making</th>
+                            <th>Transfer</th>
+                            <th>Transfer Mechanism</th>
+                            <th>Storage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Entries will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <script>
+                let currentSegment = 0;
+                const segments = document.querySelectorAll('.form-segment');
+                const progress = document.querySelector('.progress');
+                const prevBtn = document.querySelector('#prevBtn');
+                const nextBtn = document.querySelector('#nextBtn');
+            
+                function showSegment(n) {
+                    segments[currentSegment].classList.remove('active');
+                    currentSegment = currentSegment + n;
+                    if (currentSegment >= segments.length) {
+                        currentSegment = segments.length - 1;
+                        document.getElementById("ropaForm").submit(); // Trigger the form submission
+                        return false;
+                    }
+                    if (currentSegment < 0) {
+                        currentSegment = 0;
+                    }
+                    segments[currentSegment].classList.add('active');
+                    updateButtons();
+                    updateProgress();
+                }
+            
+                function changeSegment(n) {
+                    showSegment(n);
+                }
+            
+                function updateButtons() {
+                    prevBtn.disabled = currentSegment === 0;
+                    nextBtn.textContent = currentSegment === segments.length - 1 ? 'Submit' : 'Next';
+                    currentSegment === segments.length - 1 ? nextBtn.type = 'submit' : nextBtn.type = 'button';
+                }
+            
+                function updateProgress() {
+                    const percentComplete = ((currentSegment + 1) / segments.length) * 100;
+                    progress.style.width = percentComplete + '%';
+                }
+            
+                // Initial setup
+                updateButtons();
+                updateProgress();
+            
+                function showForm() {
+                    document.querySelector('.container').style.display = 'block';
+                    document.querySelector('.tableContainer').style.display = 'none';
+                }
+            
+                function showTable() {
+                    document.querySelector('.container').style.display = 'none';
+                    document.querySelector('.tableContainer').style.display = 'block';
+                    displayEntries();
+                }
+            
+                // Store form data in localStorage (you can use a database in a real app)
+                document.getElementById('ropaForm').onsubmit = function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const entries = JSON.parse(localStorage.getItem('entries')) || [];
+                    const entry = {};
+            
+                    formData.forEach((value, key) => {
+                        entry[key] = value;
+                    });
+            
+                    entries.push(entry);
+            
+                    localStorage.setItem('entries', JSON.stringify(entries));
+                    alert('Form submitted successfully!');
+                    this.reset();
+                    showTable();
+                    segments[currentSegment].classList.remove('active');
+                    currentSegment = 0;  // Reset to first segment
+                    showSegment(currentSegment);
+                    updateButtons();  // Update navigation buttons
+                    updateProgress();  // Reset progress bar
+                };
+            
+                // Display entries in the table
+                function displayEntries() {
+                    const entries = JSON.parse(localStorage.getItem('entries')) || [];
+                    const tableBody = document.querySelector('#entriesTable tbody');
+                    tableBody.innerHTML = '';
+            
+                    entries.forEach((entry) => {
+                        const row = document.createElement('tr');
+            
+                        Object.keys(entry).forEach(key => {
+                            const cell = document.createElement('td');
+                            cell.textContent = entry[key];
+                            row.appendChild(cell);
+                        });
+            
+                        tableBody.appendChild(row);
+                    });
+                }
+            </script>
+            
+        </main>
+    </div>
+</body>
+</html>
