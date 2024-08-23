@@ -36,7 +36,7 @@
             color: #ffffff;
             text-align: center;
             padding: 20px;
-            zoom: 0.7;
+            zoom: 0.65;
         }
 
         .container {
@@ -186,7 +186,7 @@
             height: 10px; /* Slightly thicker */
             background: linear-gradient(45deg, #3498db, #2ecc71); /* Gradient background */
             border-radius: 20px; /* Match border radius with container */
-            transition: width 0.4s ease-in-out; /* Smooth transition for width change */
+            transition: width 0.5s ease-in-out; /* Smooth transition for width change */
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
         }
 
@@ -205,6 +205,11 @@
             flex-shrink: 0;
             transition: all 0.3s ease; /* Smooth transition for hover effects */
             overflow-y: auto;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
         }
 
         .sidebar ul {
@@ -240,6 +245,30 @@
             transform: scale(0.95); /* Slightly shrink on click */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Smaller shadow on click */
             font-weight: bold;
+        }
+
+        /* Footer styling */
+        .sidebar-footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Engraved text styling */
+        .sidebar .engraved-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.99em;
+            color: #151515;
+            text-align: center;
+            margin: 10px 0;
+            position: absolute;
+            bottom: 20px;
+            width: 80%;
+            text-shadow: 
+                1px 1px 2px rgba(139, 139, 139, 0.1),
+                -1px -1px 2px rgba(139, 139, 139, 0.1),
+                1px -1px 2px rgba(149, 149, 149, 0.1),
+                -1px 1px 2px rgba(139, 139, 139, 0.1);
         }
 
 
@@ -283,15 +312,281 @@
         }
 
 
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+        }
+
+        .modal ::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
+            margin: 3% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px; /* Rounded corners */
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background: linear-gradient(to bottom, #2980b9, #1c598a);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .modal button:hover {
+            background: linear-gradient(to bottom, #1c598a, #143d63); /* Darker on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+        }
+
+        .modal button:active {
+            transform: scale(0.95); /* Slightly shrink on click */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Smaller shadow on click */
+        }
+
+        .modal button:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        .modal label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #ecf0f1;
+        }
+
+        /* Style for the fieldsets */
+        .modal-content fieldset {
+            display: inline-block; /* Make fieldsets inline */
+            width: 40%; /* Width of each fieldset */
+            margin-right: 2%; /* Space between fieldsets */
+            margin-bottom: 20px; /* Space below each fieldset */
+            padding: 15px; /* Padding inside each fieldset */
+            border: 2px solid #ecf0f1; /* Border color and thickness */
+            border-radius: 10px; /* Rounded corners */
+            box-sizing: border-box; /* Include padding and border in element's width and height */
+            vertical-align: top; /* Align the top of each fieldset */
+        }
+
+        /* Ensure all fieldsets have the same height */
+        .modal-content fieldset {
+            height: auto; /* Default height */
+            min-height: 200px; /* Minimum height for consistency */
+        }
+
+        /* Make sure all fieldsets in the same row have the same height */
+        .modal-content fieldset:nth-child(2n-1) {
+            clear: left; /* Clear floats for alignment */
+        }
+
+        /* Remove margin-right for the last fieldset in the row */
+        .modal-content fieldset:nth-child(2n) {
+            margin-right: 0;
+        }
+
+        /* Adjust the modal body for better alignment */
+        #modalBody {
+            display: flex;
+            flex-wrap: wrap; /* Wrap fieldsets to the next row */
+            gap: 10px; /* Space between fieldsets */
+            justify-content: space-between; /* Space them out evenly */
+        }
+
+        /* Style for the legend */
+        .modal-content legend {
+            font-weight: bold; /* Make the legend text bold */
+            padding: 0 10px; /* Add padding to the legend text */
+            color: #2980b9; /* Legend text color */
+        }
+
+        .modal input,
+        .modal select,
+        .modal textarea {
+            width: 90%;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: 1px solid #7f8c8d;
+            background: #34495e;
+            color: #ecf0f1;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Stakeholder tabs style */
+        .stakeholder-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            display: flex;
+        }
+
+        .tab-link {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-bottom: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1; /* Equal width for each tab */
+            text-align: center;
+            font-size: 1.1em;
+            border-radius: 8px 8px 0 0; /* Rounded top corners */
+        }
+
+        .tab-link:hover {
+            background-color: #1c598a;
+        }
+
+        .tab-link.active {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            border-color: #ecf0f1 #ecf0f1 #ffffff;
+        }
+
+        /* Style the tab content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 0.5px solid #ecf0f1;
+            border-radius: 0 8px 8px 8px;
+            /* background-color: #ffffff; */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /**/
+        /* Accordion Styles */
+        .accordion {
+        background-color: #2980b9;
+        color: white;
+        cursor: pointer;
+        padding: 12px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: background-color 0.3s ease;
+        margin-bottom: 5px;
+        font-weight: bold;
+        border-radius: 4px;
+        }
+
+        .accordion:hover {
+        background-color: #3498db;
+        }
+
+        .accordion-button {
+        width: 100%;
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        text-align: left;
+        padding: 12px 0;
+        }
+
+        .accordion-content {
+        padding: 10px;
+        background-color: #ecf0f1;
+        display: none;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        }
+
+        .accordion-content label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        }
+
+        .accordion-content input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        }
+
+        /* Active Accordion Content */
+        .accordion-content.active {
+        display: block;
+        }
+
+        /* Accordion Button Styles */
+        .accordion-button {
+        background-color: inherit;
+        border: none;
+        font-size: 16px;
+        padding: 12px;
+        text-align: left;
+        color: #fff;
+        width: 100%;
+        }
+
+        .accordion-button:hover {
+        background-color: #3498db;
+        }
+
+
+        
+
+
     </style>
 </head>
 <body>
     <div class="wrapper">
         <nav class="sidebar">
             <ul>
-                <li><a href="#" onclick="showForm()">ROPA Form</a></li>
-                <li><a href="#" onclick="showTable()">ROPA Entries</a></li>
+                <li><a href="#" onclick="showForm()">New Record</a></li>
+                <li><a href="#" onclick="showTable()">RoPA Entries</a></li>
             </ul>
+            <div class="sidebar-footer">
+                <p class="engraved-text">Fractal ™</p>
+            </div>
         </nav>
         <main class="content">
             <!-- ROPA FORM-->
@@ -347,6 +642,7 @@
                         <div class="input-group">
                             <label for="sensitiveData">Sensitive Data</label>
                             <select id="sensitiveData" name="sensitiveData" required>
+                                <option value="" disabled selected>Select an option</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
@@ -358,6 +654,7 @@
                         <div class="input-group">
                             <label for="gchControllerProcessor">GCH is controller or processor?</label>
                             <select id="gchControllerProcessor" name="gchControllerProcessor" required>
+                                <option value="" disabled selected>Select an option</option>
                                 <option value="controller">Controller</option>
                                 <option value="processor">Processor</option>
                             </select>
@@ -365,6 +662,7 @@
                         <div class="input-group">
                             <label for="thirdPartyControllerProcessor">Third Party is controller or processor?</label>
                             <select id="thirdPartyControllerProcessor" name="thirdPartyControllerProcessor" required>
+                                <option value="" disabled selected>Select an option</option>
                                 <option value="controller">Controller</option>
                                 <option value="processor">Processor</option>
                             </select>
@@ -416,6 +714,7 @@
                         <div class="input-group">
                             <label for="automatedDecisionMaking">Existence of automated decision-making, including profiling (if applicable)</label>
                             <select id="automatedDecisionMaking" name="automatedDecisionMaking" required>
+                                <option value="" disabled selected>Select an option</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
@@ -488,6 +787,227 @@
                 </table>
             </div>
 
+            <!-- Modal -->
+            <div id="ropaModal" class="modal">
+                <div class="modal-content" id="modalBody">
+                    <span class="close">&times;</span>
+                    <h2>ROPA Entry Details</h2>
+                    
+                </div>
+            </div>
+            
+            <template id="ropaModalTemplate">
+                <form id="modalRopaForm">
+                    <!-- Processing Operation Section -->
+                    <fieldset>
+                        <legend>Processing Operation</legend>
+                        <label for="processingDescription">Description of the processing operation:</label>
+                        <textarea id="processingDescription" name="processingDescription"></textarea>
+        
+                        <label for="processingName">Name of the processing operation:</label>
+                        <input type="text" id="processingName" name="processingName">
+        
+                        <label for="processingRef">ROPA Processing List REF:</label>
+                        <input type="text" id="processingRef" name="processingRef">
+        
+                        <label for="creationDate">Date of creation of the processing:</label>
+                        <input type="date" id="creationDate" name="creationDate">
+        
+                        <label for="updateDate">Update of the processing:</label>
+                        <input type="date" id="updateDate" name="updateDate">
+                    </fieldset>
+        
+                    <!-- Stakeholders Section -->
+                    <fieldset>
+                        <legend>Stakeholders</legend>
+                    
+                        <!-- Tabbed interface for stakeholders -->
+                        <div class="stakeholder-tabs">
+                            <button type="button" class="tab-link active" onclick="openStakeholderTab(event, 'controller')">Controller</button>
+                            <button type="button" class="tab-link" onclick="openStakeholderTab(event, 'dpo')">Data Protection Officer (DPO)</button>
+                            <button type="button" class="tab-link" onclick="openStakeholderTab(event, 'representative')">Representative</button>
+                        </div>
+                    
+                        <!-- Stakeholder content sections -->
+                        <div id="controller" class="tab-content active">
+                            <label for="controllerName">Controller Name:</label>
+                            <input type="text" id="controllerName" name="controllerName">
+                    
+                            <label for="controllerAddress">Controller Address:</label>
+                            <input type="text" id="controllerAddress" name="controllerAddress">
+                    
+                            <label for="controllerPhone">Phone number:</label>
+                            <input type="text" id="controllerPhone" name="controllerPhone">
+                    
+                            <label for="controllerEmail">Email address:</label>
+                            <input type="email" id="controllerEmail" name="controllerEmail">
+                        </div>
+                    
+                        <div id="dpo" class="tab-content">
+                            <label for="dpoName">DPO Name:</label>
+                            <input type="text" id="dpoName" name="dpoName">
+                    
+                            <label for="dpoAddress">DPO Address:</label>
+                            <input type="text" id="dpoAddress" name="dpoAddress">
+                    
+                            <label for="dpoPhone">Phone number:</label>
+                            <input type="text" id="dpoPhone" name="dpoPhone">
+                    
+                            <label for="dpoEmail">Email address:</label>
+                            <input type="email" id="dpoEmail" name="dpoEmail">
+                        </div>
+                    
+                        <div id="representative" class="tab-content">
+                            <label for="repName">Representative Name:</label>
+                            <input type="text" id="repName" name="repName">
+                    
+                            <label for="repAddress">Representative Address:</label>
+                            <input type="text" id="repAddress" name="repAddress">
+                    
+                            <label for="repPhone">Phone number:</label>
+                            <input type="text" id="repPhone" name="repPhone">
+                    
+                            <label for="repEmail">Email address:</label>
+                            <input type="email" id="repEmail" name="repEmail">
+                        </div>
+                    </fieldset>
+                    
+                    
+        
+                    <!-- Purpose Section -->
+                    <fieldset>
+                        <legend>Other Purpose(s) of the Data Processing</legend>
+        
+                        <label for="subPurpose1">Sub-purpose 1:</label>
+                        <input type="text" id="subPurpose1" name="subPurpose1">
+        
+                        <label for="subPurpose2">Sub-purpose 2:</label>
+                        <input type="text" id="subPurpose2" name="subPurpose2">
+
+                        <label for="subPurpose3">Sub-purpose 3:</label>
+                        <input type="text" id="subPurpose3" name="subPurpose3">
+
+                        <label for="subPurpose4">Sub-purpose 4:</label>
+                        <input type="text" id="subPurpose4" name="subPurpose4">
+
+                        <label for="subPurpose5">Sub-purpose 5:</label>
+                        <input type="text" id="subPurpose5" name="subPurpose5">
+        
+                        <!-- Add additional sub-purpose fields as needed -->
+                    </fieldset>
+
+        
+                    <!-- Categories of Personal Data Section -->
+                    <fieldset>
+                        <legend>Categories of Personal Data</legend>
+                        <!-- Tabs -->
+                        <div class="tabs">
+                            <button class="tab-link" onclick="openTab('categoriesData')">Categories of Personal Data</button>
+                            <button class="tab-link" onclick="openTab('specialCategoriesData')">Special Categories of Personal Data</button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div id="categoriesData" class="categories-tab-content">
+                            <!-- Accordion for Categories of Personal Data -->
+                            <div class="accordion">
+                            <button class="accordion-button">Marital status, ID, identification data, images...</button>
+                            <div class="accordion-content">
+                                <label>Description:</label>
+                                <input type="text" name="description_marital_status">
+                                <label>Data retention period:</label>
+                                <input type="text" name="retention_period_marital_status">
+                            </div>
+                            </div>
+                            
+                            <div class="accordion">
+                            <button class="accordion-button">Children's Data</button>
+                            <div class="accordion-content">
+                                <label>Description:</label>
+                                <input type="text" name="description_children_data">
+                                <label>Data retention period:</label>
+                                <input type="text" name="retention_period_children_data">
+                            </div>
+                            </div>
+                            
+                            <!-- Add more accordions as needed -->
+                        </div>
+
+                        <div id="specialCategoriesData" class="categories-tab-content">
+                            <!-- Accordion for Special Categories of Personal Data -->
+                            <div class="accordion">
+                            <button class="accordion-button">Data revealing ethnic origin</button>
+                            <div class="accordion-content">
+                                <label>Description/Context:</label>
+                                <input type="text" name="description_ethnic_origin">
+                                <label>Data retention period:</label>
+                                <input type="text" name="retention_period_ethnic_origin">
+                            </div>
+                            </div>
+                            
+                            <div class="accordion">
+                            <button class="accordion-button">Data revealing health status</button>
+                            <div class="accordion-content">
+                                <label>Description/Context:</label>
+                                <input type="text" name="description_health_status">
+                                <label>Data retention period:</label>
+                                <input type="text" name="retention_period_health_status">
+                            </div>
+                            </div>
+                            
+                            <!-- Add more accordions as needed -->
+                        </div>
+                    </fieldset>
+        
+                    <!-- Recipients Section -->
+                    <fieldset>
+                        <legend>Recipients</legend>
+                        <label for="recipient1">Recipient 1:</label>
+                        <input type="text" id="recipient1" name="recipient1">
+        
+                        <label for="recipientDetails1">Details:</label>
+                        <textarea id="recipientDetails1" name="recipientDetails1"></textarea>
+        
+                        <!-- Add similar fields for other recipients -->
+                    </fieldset>
+        
+                    <!-- Security Measures Section -->
+                    <fieldset>
+                        <legend>Security Measures</legend>
+                        <label for="securityMeasure1">Type of security measure:</label>
+                        <input type="text" id="securityMeasure1" name="securityMeasure1">
+        
+                        <label for="securityDetails1">Details:</label>
+                        <textarea id="securityDetails1" name="securityDetails1"></textarea>
+        
+                        <!-- Add similar fields for other security measures -->
+                    </fieldset>
+        
+                    <!-- Transfers to Third Countries Section -->
+                    <fieldset>
+                        <legend>Transfers to Third Countries or International Organisations</legend>
+                        <label for="recipientOrg1">Recipient organisation 1:</label>
+                        <input type="text" id="recipientOrg1" name="recipientOrg1">
+        
+                        <label for="recipientCountry1">Country:</label>
+                        <input type="text" id="recipientCountry1" name="recipientCountry1">
+        
+                        <label for="typeOfGuarantees">Type of guarantees:</label>
+                        <input type="text" id="typeOfGuarantees" name="typeOfGuarantees">
+        
+                        <label for="relevantDocuments">Links to relevant documents:</label>
+                        <input type="url" id="relevantDocuments" name="relevantDocuments">
+        
+                        <!-- Add similar fields for other recipient organisations -->
+                    </fieldset>
+        
+                    <!-- Submit and Close buttons -->
+                    <div class="modal-footer">
+                        <button type="submit">Save</button>
+                        <button type="button" class="close-btn">Close</button>
+                    </div>
+                </form>
+            </template>
+
             <script>
                 let currentSegment = 0;
                 const segments = document.querySelectorAll('.form-segment');
@@ -530,8 +1050,9 @@
             
                 function updateButtons() {
                     prevBtn.disabled = currentSegment === 0;
-                    nextBtn.textContent = currentSegment === (segments.length - 1) ? 'Submit' : 'Next';
+                    nextBtn.textContent = currentSegment >= (segments.length - 2) ? 'Submit' : 'Next';
                     currentSegment === (segments.length - 1) ? nextBtn.type = 'submit' : nextBtn.type = 'button';
+                    currentSegment > (segments.length - 1) ? nextBtn.disabled = true : nextBtn.disabled = false;
                 }
             
                 function updateProgress() {
@@ -623,6 +1144,113 @@
                     }
                     }
                 }
+
+
+                // Get modal and close button elements
+                const modal = document.getElementById("ropaModal");
+                const modalForm = document.getElementById("ropaModalTemplate");
+                const closeBtn = document.querySelector(".close");
+
+                // Function to open the modal and populate it with data
+                function openModal(entryData) {
+                    const modalBody = document.getElementById("modalBody");
+                    // Clear previous content
+                    modalBody.innerHTML = "";
+                    
+                    
+                    // Populate modal with entry data
+                    modalBody.innerHTML += `<p>Processing Activity: ${entryData.processingActivity}</p>`;
+                    modalBody.innerHTML += `<p>Source Received from: ${entryData.sourceReceivedFrom}</p>`;
+                    // Add other data fields as needed
+                    const templateContent = modalForm.content.cloneNode(true);// Clone the template content
+                    modalBody.appendChild(templateContent);// Append the cloned content to the modal body
+
+                    // Display the modal
+                    modal.style.display = "block";
+                }
+
+                // Event listener for table rows
+                document.getElementById("entriesTable").addEventListener("click", function (event) {
+                    if (event.target && event.target.nodeName === "TD") {
+                        // Assuming the row contains the entry data
+                        const row = event.target.parentNode;
+                        const entryData = {
+                            processingActivity: row.children[0].innerText,
+                            sourceReceivedFrom: row.children[1].innerText
+                            // Add other data fields as needed
+                        };
+                        openModal(entryData);
+                    }
+                });
+
+                // Event listener for the close button
+                closeBtn.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // Close the modal if the user clicks anywhere outside of the modal
+                window.onclick = function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                function openStakeholderTab(event, stakeholderId) {
+                    // Hide all tab contents
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(tab => tab.classList.remove('active'));
+
+                    // Remove active class from all tabs
+                    const tabLinks = document.querySelectorAll('.tab-link');
+                    tabLinks.forEach(tab => tab.classList.remove('active'));
+
+                    // Show the current tab content
+                    document.getElementById(stakeholderId).classList.add('active');
+
+                    // Add active class to the clicked tab
+                    event.currentTarget.classList.add('active');
+                }
+
+                function openTab(tabName) {
+                    var i, tabcontent, tabbuttons;
+                    tabcontent = document.getElementsByClassName("categories-tab-content");
+                    for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                    }
+                    tabbuttons = document.getElementsByClassName("tab-button");
+                    for (i = 0; i < tabbuttons.length; i++) {
+                    tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+                    }
+                    document.getElementById(tabName).style.display = "block";
+                    event.currentTarget.className += " active";
+                }
+
+                document.getElementsByClassName("tab-button")[0].click(); // Default to opening the first tab
+
+                modal.addEventListener("shown.bs.modal", function () {
+                    initializeAccordions();
+                });
+
+                
+
+                function initializeAccordions() {
+                    const accordions = document.querySelectorAll(".accordion");
+
+                    accordions.forEach((accordion) => {
+                        accordion.addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        const content = this.nextElementSibling;
+                        if (content.style.display === "block") {
+                            content.style.display = "none";
+                        } else {
+                            content.style.display = "block";
+                        }
+                        });
+                    });
+                }
+
+
+
             </script>
             
         </main>
