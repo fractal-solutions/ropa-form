@@ -43,19 +43,25 @@
             max-width: 600px;
             min-height: 700px;
             margin: 0 auto;
+            margin-top: -20px;
+            margin-left: 300px;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             position: relative;
             background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+            font-size: 18px;
+            justify-self: end;
         }
 
         .tableContainer {
             display: none;
             margin: 0 auto;
+            margin-top: -20px;
+            margin-left: 300px;
             padding: 0px;
-            padding-top: 20px;
+            padding-top: 10px;
             background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient background */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
             border-radius: 15px;
@@ -118,6 +124,61 @@
             width: auto; /* Ensure that the checkbox doesn't get affected by parent width */
         }
 
+        .slider-container {
+            position: relative;
+            width: max-content;
+            justify-content: center;
+            text-align: left;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: transparent;
+            margin: 10px 0;
+            padding-left: 30%;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ddd;
+            cursor: pointer;
+            border-radius: 50%;
+            padding-left: 30%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #ddd;
+            cursor: pointer;
+            border-radius: 50%;
+            padding-left: 10%;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding-left: 30%;
+            width: 100%;
+        }
+
+        .slider-container::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            top: 50%;
+            left: 30%;
+            background: linear-gradient(to right, red, orange, green);
+            z-index: -1;
+            border-radius: 3px;
+        }
+
         .warning::placeholder{
             color:#ff0000;
             
@@ -126,6 +187,8 @@
         .warning::disabled {
             background-color: #5b0000d3;
         }
+
+
 
 
         .navigation {
@@ -195,6 +258,8 @@
             min-height: 100vh; 
         }
 
+
+
         .sidebar {
             width: 250px; /* Slightly wider for more space */
             height: 100vh;
@@ -209,7 +274,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
+            position: fixed;
+            font-size: 16px;
         }
 
         .sidebar ul {
@@ -279,6 +345,22 @@
 
 
 
+        
+
+        thead {
+            background: #34495e;
+        }
+
+        tr:hover td {
+            background: #3b5998;
+        }
+
+        .hide-column {
+            display: none;
+        }
+
+       /* General Table Styling */
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -286,29 +368,105 @@
             color: #ecf0f1;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
         }
 
-        thead {
-            background: #34495e;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #7f8c8d;
-        }
-
-        th {
+        table th {
             font-weight: bold;
             text-transform: uppercase;
         }
 
-        tbody tr:hover {
-            background: #3b5998;
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #2c2c2c;
         }
 
-        .hide-column {
-            display: none;
+        /* Row Hover Effect */
+        table tr:hover {
+            background-color: #2c3e50; /* Slightly lighter for row hover */
+        }
+
+        /* Badge Styling */
+        .sensitive-badge {
+            background-color: #e74c3c; /* Red for sensitive data */
+            color: white;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin: 2px;
+        }
+
+        .non-sensitive-badge {
+            background-color: #2ecc71; /* Green for non-sensitive data */
+            color: white;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin: 2px;
+        }
+
+        .neutral-badge {
+            background-color: orange; /* Green for non-sensitive data */
+            color: white;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin: 2px;
+        }
+
+        .no-badge {
+            background-color: gray; /* Green for non-sensitive data */
+            color: white;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin: 2px;
+        }
+
+        /* Info Cell Styling */
+        .info-cell div, .parties-cell div, .controller-processor-cell div, .protection-cell div {
+            margin-bottom: 6px;
+        }
+
+
+
+        .info-cell .data {
+            font-weight: normal;
+            color: #ecf0f1; /* Light color for data */
+        }
+
+        /* Other Cell Styling */
+        .info-cell, .parties-cell, .controller-processor-cell, .protection-cell {
+            font-size: 18px;
+        }
+
+        .info-cell .legend, .parties-cell .legend, .controller-processor-cell .legend, .protection-cell .legend {
+            font-weight: bold;
+            color: #3498db; /* Blue for distinction */
+        }
+
+        .info-cell .data, .parties-cell .data, .controller-processor-cell .data, .protection-cell .data {
+            font-weight: normal;
+            color: #ecf0f1; /* Light color for data */
+        }
+
+
+        /* For smaller screens, stack items vertically */
+        @media (max-width: 768px) {
+            td div:nth-child(2) {
+                grid-template-columns: 1fr;
+            }
         }
 
 
@@ -323,6 +481,7 @@
             height: 100%;
             overflow: auto; /* Enable scroll if needed */
             background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+            font-size: 14px;
         }
 
         .modal ::-webkit-scrollbar {
@@ -453,14 +612,16 @@
         }
 
         /* Stakeholder tabs style */
-        .stakeholder-tabs {
+        .stakeholder-tabs,
+        .tabs {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
             display: flex;
         }
 
-        .tab-link {
+        .stakeholder-tabs .tab-link, 
+        .tabs .tab-link {
             background-color: #2c3e50;
             color: #ecf0f1;
             border: 1px solid #34495e;
@@ -474,18 +635,21 @@
             border-radius: 8px 8px 0 0; /* Rounded top corners */
         }
 
-        .tab-link:hover {
+        .stakeholder-tabs .tab-link:hover, 
+        .tabs .tab-link:hover {
             background-color: #1c598a;
         }
 
-        .tab-link.active {
+        .stakeholder-tabs .tab-link.active,
+        .tabs .tab-link.active {
             background-color: #ecf0f1;
             color: #2c3e50;
             border-color: #ecf0f1 #ecf0f1 #ffffff;
         }
 
         /* Style the tab content */
-        .tab-content {
+        .tab-content,
+        .categories-tab-content {
             display: none;
             padding: 20px;
             border: 0.5px solid #ecf0f1;
@@ -493,83 +657,82 @@
             /* background-color: #ffffff; */
         }
 
-        .tab-content.active {
+        .tab-content.active,
+        .categories-tab-content.active {
             display: block;
         }
 
         /**/
         /* Accordion Styles */
         .accordion {
-        background-color: #2980b9;
-        color: white;
-        cursor: pointer;
-        padding: 12px;
-        width: 100%;
-        text-align: left;
-        border: none;
-        outline: none;
-        transition: background-color 0.3s ease;
-        margin-bottom: 5px;
-        font-weight: bold;
-        border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            width: 90%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease;
+            margin-bottom: 5px;
+            font-weight: bold;
+            border-radius: 4px;
         }
 
         .accordion:hover {
-        background-color: #3498db;
+            /* background-color: #3498db; */
         }
 
-        .accordion-button {
-        width: 100%;
-        background: none;
-        border: none;
-        color: inherit;
-        cursor: pointer;
-        text-align: left;
-        padding: 12px 0;
+        /* Accordion Button Styles */
+        .modal .accordion-button {
+            width: 100%;
+            background: linear-gradient(135deg, #2c3e50, #2c3e50);
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            text-align: center;
+            padding: 12px 0;
+        }
+
+       
+        .modal .accordion-button {
+            font-size: 16px;
+            color: #fff;
+            margin: 0px;
+        }
+
+        .accordion-button:hover {
+            /* background-color: #3498db; */
         }
 
         .accordion-content {
-        padding: 10px;
-        background-color: #ecf0f1;
-        display: none;
-        border: 1px solid #ccc;
-        border-top: none;
-        border-radius: 0 0 4px 4px;
+            padding: 10px;
+            /* background: linear-gradient(135deg, #2c3e50, #2c3e50);  */
+            display: none;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
         }
 
         .accordion-content label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: normal;
         }
 
         .accordion-content input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 10px;
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
         }
 
         /* Active Accordion Content */
         .accordion-content.active {
-        display: block;
+            display: block;
         }
 
-        /* Accordion Button Styles */
-        .accordion-button {
-        background-color: inherit;
-        border: none;
-        font-size: 16px;
-        padding: 12px;
-        text-align: left;
-        color: #fff;
-        width: 100%;
-        }
 
-        .accordion-button:hover {
-        background-color: #3498db;
-        }
 
 
         
@@ -665,6 +828,7 @@
                                 <option value="" disabled selected>Select an option</option>
                                 <option value="controller">Controller</option>
                                 <option value="processor">Processor</option>
+                                <option value="none">None</option>
                             </select>
                         </div>
                         
@@ -726,7 +890,11 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="transfer">TRANSFER</label>
-                            <textarea id="transfer" name="transfer" placeholder="Is there a transfer of the data involved?" required></textarea>
+                            <select id="transfer" name="transfer" required>
+                                <option value="" disabled selected>Is there transfer of data?</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
                         </div>
                         <div class="input-group">
                             <label for="transferMechanism">TRANSFER MECHANISM</label>
@@ -735,6 +903,15 @@
                         <div class="input-group">
                             <label for="storage">Storage</label>
                             <textarea id="storage" name="storage" placeholder="How long will the data be stored?" required></textarea>
+                        </div>
+                        <div class="slider-container">
+                            <label for="storageSecurity">Storage Security</label>
+                            <input type="range" id="storageSecurity" name="storageSecurity" min="0" max="2" step="1" value="1">
+                            <div class="slider-labels" id="storageSecurityLabel">
+                                <span>Unsafe</span>
+                                <span>Safe</span>
+                                <span>Protected</span>
+                            </div>
                         </div>
                     </div>
 
@@ -760,25 +937,19 @@
                 <table id="entriesTable">
                     <thead>
                         <tr>
-                            <th>Processing Activity</th>
-                            <th>Source Received From</th>
-                            <th>Data</th>
-                            <th>Purpose</th>
-                            <th>Shared With</th>
-                            <th>Data Subject</th>
-                            <th>Type of Record</th>
-                            <th>Data Classification</th>
-                            <th>Sensitive Data</th>
-                            <th>GCH</th>
-                            <th>Third-Party</th>
-                            <th>Basis of Processing</th>
+                            <th>Status</th>
+                            <th>Info</th>
+                            <th>Parties</th>
+                            <th>Controller/Processor</th>
+                            <th>Protection</th>
+            
                             <th class="hide-column">Justification of Basis</th>
                             <th class="hide-column">Legitimate Interest</th>
                             <th class="hide-column">Impact of Processing</th>
                             <th class="hide-column">Automated Decision-Making</th>
                             <th class="hide-column">Transfer</th>
                             <th class="hide-column">Transfer Mechanism</th>
-                            <th>Storage</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -910,53 +1081,186 @@
                         <div id="categoriesData" class="categories-tab-content">
                             <!-- Accordion for Categories of Personal Data -->
                             <div class="accordion">
-                            <button class="accordion-button">Marital status, ID, identification data, images...</button>
-                            <div class="accordion-content">
-                                <label>Description:</label>
-                                <input type="text" name="description_marital_status">
-                                <label>Data retention period:</label>
-                                <input type="text" name="retention_period_marital_status">
+                                <button class="accordion-button">Marital status, ID, identification data, images... &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_marital_status">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_marital_status">
+                                </div>
                             </div>
-                            </div>
-                            
+
                             <div class="accordion">
-                            <button class="accordion-button">Children's Data</button>
-                            <div class="accordion-content">
-                                <label>Description:</label>
-                                <input type="text" name="description_children_data">
-                                <label>Data retention period:</label>
-                                <input type="text" name="retention_period_children_data">
+                                <button class="accordion-button">Children's Data &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_children_data">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_children_data">
+                                </div>
                             </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Personal life (lifestyle, family situation, etc.) &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_personal_life">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_personal_life">
+                                </div>
                             </div>
-                            
+
+                            <div class="accordion">
+                                <button class="accordion-button">Economic and financial information (income, financial situation, tax situation, etc.) &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_economic_financial">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_economic_financial">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Connection data (IP address, logs, etc.) &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_connection_data">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_connection_data">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Referees and other third parties &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_referees_third_parties">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_referees_third_parties">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Department to determine common categories of personal data &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description:</label>
+                                    <input type="text" name="description_department_common_categories">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_department_common_categories">
+                                </div>
+                            </div>
+
+
                             <!-- Add more accordions as needed -->
                         </div>
 
                         <div id="specialCategoriesData" class="categories-tab-content">
                             <!-- Accordion for Special Categories of Personal Data -->
                             <div class="accordion">
-                            <button class="accordion-button">Data revealing ethnic origin</button>
-                            <div class="accordion-content">
-                                <label>Description/Context:</label>
-                                <input type="text" name="description_ethnic_origin">
-                                <label>Data retention period:</label>
-                                <input type="text" name="retention_period_ethnic_origin">
+                                <button class="accordion-button">Data revealing ethnic origin &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_ethnic_origin">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_ethnic_origin">
+                                </div>
                             </div>
-                            </div>
-                            
+
                             <div class="accordion">
-                            <button class="accordion-button">Data revealing health status</button>
-                            <div class="accordion-content">
-                                <label>Description/Context:</label>
-                                <input type="text" name="description_health_status">
-                                <label>Data retention period:</label>
-                                <input type="text" name="retention_period_health_status">
+                                <button class="accordion-button">Data revealing health status &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_health_status">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_health_status">
+                                </div>
                             </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data revealing conscience, belief &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_conscience_belief">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_conscience_belief">
+                                </div>
                             </div>
-                            
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data revealing ethnic social origin &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_ethnic_social_origin">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_ethnic_social_origin">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Genetic data &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_genetic_data">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_genetic_data">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Biometric data &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_biometric_data">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_biometric_data">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data concerning property details &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_property_details">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_property_details">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data revealing marital status &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_marital_status">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_marital_status">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data revealing sex or the sexual orientation of the data subject &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_sex_orientation">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_sex_orientation">
+                                </div>
+                            </div>
+
+                            <div class="accordion">
+                                <button class="accordion-button">Data relating to family details including names of the person's children, parents, spouse or spouse &#10572;</button>
+                                <div class="accordion-content">
+                                    <label>Description/Context:</label>
+                                    <input type="text" name="description_family_details">
+                                    <label>Data retention period:</label>
+                                    <input type="text" name="retention_period_family_details">
+                                </div>
+                            </div>
+
+
                             <!-- Add more accordions as needed -->
                         </div>
                     </fieldset>
+
         
                     <!-- Recipients Section -->
                     <fieldset>
@@ -1063,6 +1367,8 @@
                 // Initial setup
                 updateButtons();
                 updateProgress();
+
+
             
                 function showForm() {
                     document.querySelector('.container').style.display = 'block';
@@ -1104,17 +1410,66 @@
                     const entries = JSON.parse(localStorage.getItem('entries')) || [];
                     const tableBody = document.querySelector('#entriesTable tbody');
                     tableBody.innerHTML = '';
+
+                    //new entry mechanism
             
                     entries.forEach((entry) => {
+                        console.log(entry);
                         const row = document.createElement('tr');
-            
-                        Object.keys(entry).forEach(key => {
-                            const cell = document.createElement('td');
-                            cell.textContent = entry[key];
-                            row.appendChild(cell);
-                        });
-            
+
+                        // Badge Cell
+                        const badgeCell = document.createElement('td');
+                        const sensitivityBadgeClass = entry["sensitiveData"] === 'yes' ? 'sensitive-badge' : 'non-sensitive-badge';
+                        const securityBadgeClass = entry["storageSecurity"] == 0 ? 'sensitive-badge' : entry["storageSecurity"] == 1 ? 'neutral-badge' : entry["storageSecurity"] == 2 ? 'non-sensitive-badge' : 'no-badge'
+                        badgeCell.innerHTML = `<div class="${sensitivityBadgeClass}">${entry["sensitiveData"] === 'yes' ? 'Sensitive' : 'Non-Sensitive'}</div>
+                                               <div class="${securityBadgeClass}">${entry["storageSecurity"] == 0 ? 'Unsafe' : entry["storageSecurity"] == 1 ? 'Safe' : entry["storageSecurity"] == 2 ? 'Protected' : 'Undefined'}</div>`;
+
+                        // Info Cell
+                        const infoCell = document.createElement('td');
+                        infoCell.classList.add('info-cell');
+                        infoCell.innerHTML = `
+                            <div><span class="legend">Source:</span> <span class="data">${entry["sourceReceivedFrom"]}</span></div> 
+                            <div><span class="legend">Data:</span> <span class="data">${entry["data"]}</span></div> 
+                            <div><span class="legend">Processing Activity:</span> <span class="data">${entry["processingActivity"]}</span></div>
+                        `;
+
+                        // Parties Cell
+                        const partiesCell = document.createElement('td');
+                        partiesCell.classList.add('parties-cell');
+                        partiesCell.innerHTML = `
+                            <div><span class="legend">Data Subject:</span> <span class="data">${entry["dataSubject"]}</span></div>
+                            <div><span class="legend">Purpose:</span> <span class="data">${entry["purpose"]}</span></div>
+                            <div><span class="legend">Shared With:</span> <span class="data">${entry["sharedWith"]}</span></div>
+                        `;
+
+                        // Controller Processor Cell
+                        const controllerProcessorCell = document.createElement('td');
+                        controllerProcessorCell.classList.add('controller-processor-cell');
+                        controllerProcessorCell.innerHTML = `
+                            <div><span class="legend">GCH:</span> <span class="data">${entry["gchControllerProcessor"]}</span></div>
+                            <div><span class="legend">Third Party:</span> <span class="data">${entry["thirdPartyControllerProcessor"]}</span></div>
+                            <div><span class="legend">Basis of Processing:</span> <span class="data">${entry["basisOfProcessing"]}</span></div>
+                            <div><span class="legend">Justification of Basis:</span> <span class="data">${entry["justificationOfBasis"]}</span></div>
+                            <div><span class="legend">Auto Decision Making:</span> <span class="data">${entry["automatedDecisionMaking"]}</span></div>
+                        `;
+
+                        // Protection Cell
+                        const protectionCell = document.createElement('td');
+                        protectionCell.classList.add('protection-cell');
+                        protectionCell.innerHTML = `
+                            <div><span class="legend">Storage:</span> <span class="data">${entry["storage"]}</span></div>
+                            <div><span class="legend">Transfer:</span> <span class="data">${entry["transfer"]}</span></div>
+                            <div><span class="legend">Transfer Mechanism:</span> <span class="data">${entry["transferMechanism"]}</span></div>
+                        `;
+
+                        row.appendChild(badgeCell);
+                        row.appendChild(infoCell);
+                        row.appendChild(partiesCell);
+                        row.appendChild(controllerProcessorCell);
+                        row.appendChild(protectionCell);
+
                         tableBody.appendChild(row);
+
                     });
 
                     hideColumns();
@@ -1159,11 +1514,13 @@
                     
                     
                     // Populate modal with entry data
-                    modalBody.innerHTML += `<p>Processing Activity: ${entryData.processingActivity}</p>`;
-                    modalBody.innerHTML += `<p>Source Received from: ${entryData.sourceReceivedFrom}</p>`;
+                    modalBody.innerHTML += `<p>Info: ${entryData.info}</p>`;
+                    modalBody.innerHTML += `<p>Parties Involved: ${entryData.parties}</p>`;
                     // Add other data fields as needed
                     const templateContent = modalForm.content.cloneNode(true);// Clone the template content
                     modalBody.appendChild(templateContent);// Append the cloned content to the modal body
+                    openTab('categoriesData');
+                    initializeAccordions();
 
                     // Display the modal
                     modal.style.display = "block";
@@ -1171,17 +1528,24 @@
 
                 // Event listener for table rows
                 document.getElementById("entriesTable").addEventListener("click", function (event) {
-                    if (event.target && event.target.nodeName === "TD") {
-                        // Assuming the row contains the entry data
-                        const row = event.target.parentNode;
-                        const entryData = {
-                            processingActivity: row.children[0].innerText,
-                            sourceReceivedFrom: row.children[1].innerText
-                            // Add other data fields as needed
-                        };
-                        openModal(entryData);
-                    }
-                });
+                let targetElement = event.target;
+
+                // Traverse up the DOM tree to find the <td> element, if necessary
+                while (targetElement && targetElement.nodeName !== "TD") {
+                    targetElement = targetElement.parentNode;
+                }
+
+                if (targetElement) {
+                    const row = targetElement.parentNode; // <tr> element
+                    const entryData = {
+                        info: row.children[1].innerHTML,
+                        parties: row.children[2].innerHTML
+                        // Add other data fields as needed
+                    };
+                    openModal(entryData);
+                }
+            });
+
 
                 // Event listener for the close button
                 closeBtn.onclick = function () {
@@ -1219,36 +1583,32 @@
                     }
                     tabbuttons = document.getElementsByClassName("tab-button");
                     for (i = 0; i < tabbuttons.length; i++) {
-                    tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+                    tabbuttons[i].className = tabbuttons[i].classList.remove('active');
                     }
                     document.getElementById(tabName).style.display = "block";
-                    event.currentTarget.className += " active";
+                    event.currentTarget.classList.add("active");
                 }
 
-                document.getElementsByClassName("tab-button")[0].click(); // Default to opening the first tab
+
 
                 modal.addEventListener("shown.bs.modal", function () {
-                    initializeAccordions();
+                    console.log("Modal opened");
+                    
                 });
 
-                
-
                 function initializeAccordions() {
-                    const accordions = document.querySelectorAll(".accordion");
-
-                    accordions.forEach((accordion) => {
-                        accordion.addEventListener("click", function () {
-                        this.classList.toggle("active");
-                        const content = this.nextElementSibling;
-                        if (content.style.display === "block") {
-                            content.style.display = "none";
-                        } else {
-                            content.style.display = "block";
-                        }
+                    const accordionButtons = document.querySelectorAll('.accordion-button');
+                    accordionButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const accordionContent = this.nextElementSibling;
+                            if (accordionContent.style.display === 'block') {
+                                accordionContent.style.display = 'none';
+                            } else {
+                                accordionContent.style.display = 'block';
+                            }
                         });
                     });
                 }
-
 
 
             </script>
