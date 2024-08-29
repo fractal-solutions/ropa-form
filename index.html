@@ -109,8 +109,12 @@
         }
 
         .input-group textarea {
-            height: 100px;
+            height: 130px;
             resize: vertical;
+        }
+
+        .input-group textarea ::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
         }
 
         .checkbox-item {
@@ -674,7 +678,7 @@
             outline: none;
             transition: background-color 0.3s ease;
             margin-bottom: 5px;
-            font-weight: bold;
+            font-weight: normal;
             border-radius: 4px;
         }
 
@@ -764,7 +768,7 @@
                     <div class="form-segment active">
                         <div class="input-group">
                             <label for="processingActivity">Processing Activity</label>
-                            <textarea id="processingActivity" name="processingActivity" placeholder="What processing activity are we undertaking on the data? A processing activity is any action or series of actions performed on data, especially personal data.  This definition is meant to be broad and encompass pretty much anything you can do with data. Because this is a ROPA, Assess each processing activity separately..." required></textarea>
+                            <textarea id="processingActivity" name="processingActivity" placeholder="A processing activity is any action or series of actions performed on data, especially personal data.  This definition is meant to be broad and encompass pretty much anything you can do with data. Because this is a ROPA, Assess each processing activity separately..." required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="sourceReceivedFrom">Source Received from</label>
@@ -783,7 +787,7 @@
                             <textarea id="purpose" name="purpose" placeholder="Why are you dealing with this data? E.g we need to provided medical care or we need to process employment applications" required></textarea>
                         </div>
                         <div class="input-group">
-                            <label for="sharedWith">Shared with</label>
+                            <label for="sharedWith">Third-Party (Shared with)</label>
                             <input type="text" id="sharedWith" name="sharedWith" placeholder="Who are you sharing this information with?" required>
                         </div>
                         <div class="input-group">
@@ -795,7 +799,7 @@
                     <!-- Segment 3 -->
                     <div class="form-segment">
                         <div class="input-group">
-                            <label for="typeOfRecord">TYPE OF RECORD</label>
+                            <label for="typeOfRecord">Type Of Record</label>
                             <input type="text" id="typeOfRecord" name="typeOfRecord" placeholder="What type of record is it?" required>
                         </div>
                         <div class="input-group">
@@ -858,7 +862,7 @@
                             <textarea id="justificationOfBasis" name="justificationOfBasis" placeholder="Why did you select the basis - what is proof of the basis?" required></textarea>
                         </div>
                         <div class="input-group">
-                            <label for="legitimateInterest">LEGITIMATE INTEREST</label>
+                            <label for="legitimateInterest">legitimate Interest</label>
                             <textarea id="legitimateInterest" name="legitimateInterest" placeholder="If the basis selected is legitimate interest, document in detail." required></textarea>
                         </div>
                     </div>
@@ -889,7 +893,7 @@
                     <!-- Segment 7 -->
                     <div class="form-segment">
                         <div class="input-group">
-                            <label for="transfer">TRANSFER</label>
+                            <label for="transfer">Transfer</label>
                             <select id="transfer" name="transfer" required>
                                 <option value="" disabled selected>Is there transfer of data?</option>
                                 <option value="yes">Yes</option>
@@ -897,13 +901,19 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <label for="transferMechanism">TRANSFER MECHANISM</label>
-                            <textarea id="transferMechanism" name="transferMechanism" placeholder="How is data transfer undertaken?" required></textarea>
+                            <label for="transferMechanism">Transfer Mechanism</label>
+                            <input type="text" id="transferMechanism" name="transferMechanism" placeholder="How is data transfer undertaken?" required></textarea>
                         </div>
                         <div class="input-group">
                             <label for="storage">Storage</label>
-                            <textarea id="storage" name="storage" placeholder="How long will the data be stored?" required></textarea>
+                            <input type="text" id="storage" name="storage" placeholder="Where will the data be stored?" required></textarea>
                         </div>
+                        <div class="input-group">
+                            <label for="storageDuration">Storage Duration</label>
+                            <input type="text" id="storageDuration" name="storageDuration" placeholder="How long will the data be stored?" required></textarea>
+                        </div>
+
+
                         <div class="slider-container">
                             <label for="storageSecurity">Storage Security</label>
                             <input type="range" id="storageSecurity" name="storageSecurity" min="0" max="2" step="1" value="1">
@@ -919,7 +929,10 @@
                     <div class="form-segment">
                         <div class="input-group">
                             <label for="transfer">YOU HAVE NOT COMPLETED REQUIRED VALUES FOR THE ROPA</label>
-                            <input class="warning" type="text" placeholder="Go back through the form and fill relevant data!" readonly required></textarea>
+                            <input class="warning" type="text" placeholder="Go back through the form and fill relevant data!!!" readonly required></textarea>
+                            <div style="text-align: center; height: 100px; line-height: 100px; display: flex; justify-content: center; align-items: center; color: red; font-size: 200px; padding-top: 80px">
+                                &#9888;
+                            </div>
                         </div>
                     </div>
 
@@ -994,9 +1007,9 @@
                     
                         <!-- Tabbed interface for stakeholders -->
                         <div class="stakeholder-tabs">
-                            <button type="button" class="tab-link active" onclick="openStakeholderTab(event, 'controller')">Controller</button>
-                            <button type="button" class="tab-link" onclick="openStakeholderTab(event, 'dpo')">Data Protection Officer (DPO)</button>
-                            <button type="button" class="tab-link" onclick="openStakeholderTab(event, 'representative')">Representative</button>
+                            <div type="button" class="tab-link active" onclick="openStakeholderTab(event, 'controller')">Controller</div>
+                            <div type="button" class="tab-link" onclick="openStakeholderTab(event, 'dpo')">Data Protection Officer (DPO)</div>
+                            <div type="button" class="tab-link" onclick="openStakeholderTab(event, 'representative')">Representative</div>
                         </div>
                     
                         <!-- Stakeholder content sections -->
@@ -1073,15 +1086,15 @@
                         <legend>Categories of Personal Data</legend>
                         <!-- Tabs -->
                         <div class="tabs">
-                            <button class="tab-link" onclick="openTab('categoriesData')">Categories of Personal Data</button>
-                            <button class="tab-link" onclick="openTab('specialCategoriesData')">Special Categories of Personal Data</button>
+                            <div class="tab-link" onclick="openTab('categoriesData')">Categories of Personal Data</div>
+                            <div class="tab-link" onclick="openTab('specialCategoriesData')">Special Categories of Personal Data</div>
                         </div>
 
                         <!-- Tab Content -->
                         <div id="categoriesData" class="categories-tab-content">
                             <!-- Accordion for Categories of Personal Data -->
                             <div class="accordion">
-                                <button class="accordion-button">Marital status, ID, identification data, images... &#10572;</button>
+                                <div class="accordion-button">Marital status, ID, identification data, images... &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_marital_status">
@@ -1091,7 +1104,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Children's Data &#10572;</button>
+                                <div class="accordion-button">Children's Data &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_children_data">
@@ -1101,7 +1114,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Personal life (lifestyle, family situation, etc.) &#10572;</button>
+                                <div class="accordion-button">Personal life (lifestyle, family situation, etc.) &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_personal_life">
@@ -1111,7 +1124,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Economic and financial information (income, financial situation, tax situation, etc.) &#10572;</button>
+                                <div class="accordion-button">Economic and financial information (income, financial situation, tax situation, etc.) &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_economic_financial">
@@ -1121,7 +1134,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Connection data (IP address, logs, etc.) &#10572;</button>
+                                <div class="accordion-button">Connection data (IP address, logs, etc.) &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_connection_data">
@@ -1131,7 +1144,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Referees and other third parties &#10572;</button>
+                                <div class="accordion-button">Referees and other third parties &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_referees_third_parties">
@@ -1141,7 +1154,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Department to determine common categories of personal data &#10572;</button>
+                                <div class="accordion-button">Department to determine common categories of personal data &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description:</label>
                                     <input type="text" name="description_department_common_categories">
@@ -1157,7 +1170,7 @@
                         <div id="specialCategoriesData" class="categories-tab-content">
                             <!-- Accordion for Special Categories of Personal Data -->
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing ethnic origin &#10572;</button>
+                                <div class="accordion-button">Data revealing ethnic origin &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_ethnic_origin">
@@ -1167,7 +1180,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing health status &#10572;</button>
+                                <div class="accordion-button">Data revealing health status &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_health_status">
@@ -1177,7 +1190,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing conscience, belief &#10572;</button>
+                                <div class="accordion-button">Data revealing conscience, belief &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_conscience_belief">
@@ -1187,7 +1200,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing ethnic social origin &#10572;</button>
+                                <div class="accordion-button">Data revealing ethnic social origin &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_ethnic_social_origin">
@@ -1197,7 +1210,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Genetic data &#10572;</button>
+                                <div class="accordion-button">Genetic data &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_genetic_data">
@@ -1207,7 +1220,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Biometric data &#10572;</button>
+                                <div class="accordion-button">Biometric data &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_biometric_data">
@@ -1217,7 +1230,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data concerning property details &#10572;</button>
+                                <div class="accordion-button">Data concerning property details &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_property_details">
@@ -1227,7 +1240,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing marital status &#10572;</button>
+                                <div class="accordion-button">Data revealing marital status &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_marital_status">
@@ -1237,7 +1250,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data revealing sex or the sexual orientation of the data subject &#10572;</button>
+                                <div class="accordion-button">Data revealing sex or the sexual orientation of the data subject &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_sex_orientation">
@@ -1247,7 +1260,7 @@
                             </div>
 
                             <div class="accordion">
-                                <button class="accordion-button">Data relating to family details including names of the person's children, parents, spouse or spouse &#10572;</button>
+                                <div class="accordion-button">Data relating to family details including names of the person's children, parents, spouse or spouse &#10572;</div>
                                 <div class="accordion-content">
                                     <label>Description/Context:</label>
                                     <input type="text" name="description_family_details">
@@ -1313,11 +1326,23 @@
             </template>
 
             <script>
+                //some vars
                 let currentSegment = 0;
                 const segments = document.querySelectorAll('.form-segment');
                 const progress = document.querySelector('.progress');
                 const prevBtn = document.querySelector('#prevBtn');
                 const nextBtn = document.querySelector('#nextBtn');
+
+
+                //show debug
+                
+
+                //CREATE OR READ EXSISTING DB
+                const dbjs = require( 'database-js' );
+
+                
+                //REST OF IT
+                
             
                 function showSegment(n) {
                     // Hide the current segment
@@ -1367,6 +1392,7 @@
                 // Initial setup
                 updateButtons();
                 updateProgress();
+                displayEntries();
 
 
             
@@ -1385,17 +1411,48 @@
                 document.getElementById('ropaForm').onsubmit = function (e) {
                     e.preventDefault();
                     const formData = new FormData(this);
-                    const entries = JSON.parse(localStorage.getItem('entries')) || [];
+                    //const entries = JSON.parse(localStorage.getItem('entries')) || [];
                     const entry = {};
             
                     formData.forEach((value, key) => {
                         entry[key] = value;
                     });
+                    //STORE TO DB
+                    ( async () => {
+                        let conn;
+                        try {
+                            conn = new dbjs.Connection( 'json:///ropa-base.json' );
+                            const allEntries = conn.prepareStatement( 'SELECT *' );
+                            const table = document.querySelector('#entriesTable');
+                            const id = table.rows.length + 1;
+                            const saveEntry = conn.prepareStatement( `INSERT VALUES {
+                                "id":"${id}","automatedDecisionMaking":"${entry["automatedDecisionMaking"]}", "basisOfProcessing":"${entry["basisOfProcessing"]}", 
+                                "data":"${entry["data"]}", "dataClassification":"${entry["dataClassification"]}", "dataSubject":"${entry["dataSubject"]}",
+                                "gchControllerProcessor":"${entry["gchControllerProcessor"]}", "impactOfProcessing":"${entry["impactOfProcessing"]}", 
+                                "justificationOfBasis":"${entry["justificationOfBasis"]}", "legitimateInterest":"${entry["legitimateInterest"]}",
+                                "processingActivity":"${entry["processingActivity"]}", "purpose":"${entry["purpose"]}", "sensitiveData":"${entry["sensitiveData"]}", 
+                                "sharedWith":"${entry["sharedWith"]}", "sourceReceivedFrom":"${entry["sourceReceivedFrom"]}",
+                                "storage":"${entry["storage"]}", "storageDuration":"${entry["storageDuration"]}", "storageSecurity":"${entry["storageSecurity"]}", 
+                                "thirdPartyControllerProcessor":"${entry["thirdPartyControllerProcessor"]}", "transfer":"${entry["transfer"]}", 
+                                "transferMechanism":"${entry["transferMechanism"]}", "typeOfRecord":"${entry["typeOfRecord"]}"
+                            }` );
+                            await saveEntry.execute();
+                        } catch(err) {
+                            console.error( err );
+                            alert(err);
+                        } finally {
+                            if ( conn ) {
+                                await conn.close();
+                            }
+                            alert('Entry submitted successfully!');
+                            displayEntries();
+                        }
+                    })();
             
-                    entries.push(entry);
+                    //entries.push(entry);
             
-                    localStorage.setItem('entries', JSON.stringify(entries));
-                    alert('Form submitted successfully!');
+                    //localStorage.setItem('entries', JSON.stringify(entries));
+                    // alert('Form submitted successfully!');
                     this.reset();
                     showTable();
                     segments[currentSegment].classList.remove('active');
@@ -1406,73 +1463,99 @@
                 };
             
                 // Display entries in the table
-                function displayEntries() {
-                    const entries = JSON.parse(localStorage.getItem('entries')) || [];
+                async function displayEntries() {
+                    //const entries = JSON.parse(localStorage.getItem('entries')) || [];
+                    let entries;
+                    const tableName = 'ropa_entry';
+                    
                     const tableBody = document.querySelector('#entriesTable tbody');
                     tableBody.innerHTML = '';
 
+                    ( async () => {
+                        let conn;
+                        try {
+                            conn = new dbjs.Connection( 'json:///ropa-base.json' );
+                            const queryEntries = conn.prepareStatement( 'SELECT *' );
+                            const entryData = await queryEntries.query();
+                            entries = entryData;
+                            // entries = JSON.parse(entries);
+
+                        } catch (err) {
+                            console.error( err );
+                            alert(err);
+                        } finally {
+                            if ( conn ) {
+                                await conn.close();
+                            }
+                            drawEntries();
+                            hideColumns();
+                        }
+                    })();
+
                     //new entry mechanism
-            
-                    entries.forEach((entry) => {
-                        console.log(entry);
-                        const row = document.createElement('tr');
+                    function drawEntries(){
+                        entries.forEach((entry) => {
+                            console.log(entry);
+                            const row = document.createElement('tr');
 
-                        // Badge Cell
-                        const badgeCell = document.createElement('td');
-                        const sensitivityBadgeClass = entry["sensitiveData"] === 'yes' ? 'sensitive-badge' : 'non-sensitive-badge';
-                        const securityBadgeClass = entry["storageSecurity"] == 0 ? 'sensitive-badge' : entry["storageSecurity"] == 1 ? 'neutral-badge' : entry["storageSecurity"] == 2 ? 'non-sensitive-badge' : 'no-badge'
-                        badgeCell.innerHTML = `<div class="${sensitivityBadgeClass}">${entry["sensitiveData"] === 'yes' ? 'Sensitive' : 'Non-Sensitive'}</div>
-                                               <div class="${securityBadgeClass}">${entry["storageSecurity"] == 0 ? 'Unsafe' : entry["storageSecurity"] == 1 ? 'Safe' : entry["storageSecurity"] == 2 ? 'Protected' : 'Undefined'}</div>`;
+                            // Badge Cell
+                            const badgeCell = document.createElement('td');
+                            const sensitivityBadgeClass = entry["sensitiveData"] === 'yes' ? 'sensitive-badge' : 'non-sensitive-badge';
+                            const securityBadgeClass = entry["storageSecurity"] == 0 ? 'sensitive-badge' : entry["storageSecurity"] == 1 ? 'neutral-badge' : entry["storageSecurity"] == 2 ? 'non-sensitive-badge' : 'no-badge'
+                            badgeCell.innerHTML = `<div class="${sensitivityBadgeClass}">${entry["sensitiveData"] === 'yes' ? 'Sensitive' : 'Non-Sensitive'}</div>
+                                                <div class="${securityBadgeClass}">${entry["storageSecurity"] == 0 ? 'Unsafe' : entry["storageSecurity"] == 1 ? 'Safe' : entry["storageSecurity"] == 2 ? 'Protected' : 'Undefined'}</div>`;
 
-                        // Info Cell
-                        const infoCell = document.createElement('td');
-                        infoCell.classList.add('info-cell');
-                        infoCell.innerHTML = `
-                            <div><span class="legend">Source:</span> <span class="data">${entry["sourceReceivedFrom"]}</span></div> 
-                            <div><span class="legend">Data:</span> <span class="data">${entry["data"]}</span></div> 
-                            <div><span class="legend">Processing Activity:</span> <span class="data">${entry["processingActivity"]}</span></div>
-                        `;
+                            // Info Cell
+                            const infoCell = document.createElement('td');
+                            infoCell.classList.add('info-cell');
+                            infoCell.innerHTML = `
+                                <div><span class="legend">Source:</span> <span class="data">${entry["sourceReceivedFrom"]}</span></div> 
+                                <div><span class="legend">Data:</span> <span class="data">${entry["data"]}</span></div> 
+                                <div><span class="legend">Processing Activity:</span> <span class="data">${entry["processingActivity"]}</span></div>
+                            `;
 
-                        // Parties Cell
-                        const partiesCell = document.createElement('td');
-                        partiesCell.classList.add('parties-cell');
-                        partiesCell.innerHTML = `
-                            <div><span class="legend">Data Subject:</span> <span class="data">${entry["dataSubject"]}</span></div>
-                            <div><span class="legend">Purpose:</span> <span class="data">${entry["purpose"]}</span></div>
-                            <div><span class="legend">Shared With:</span> <span class="data">${entry["sharedWith"]}</span></div>
-                        `;
+                            // Parties Cell
+                            const partiesCell = document.createElement('td');
+                            partiesCell.classList.add('parties-cell');
+                            partiesCell.innerHTML = `
+                                <div><span class="legend">Data Subject:</span> <span class="data">${entry["dataSubject"]}</span></div>
+                                <div><span class="legend">Purpose:</span> <span class="data">${entry["purpose"]}</span></div>
+                                <div><span class="legend">Shared With:</span> <span class="data">${entry["sharedWith"]}</span></div>
+                            `;
 
-                        // Controller Processor Cell
-                        const controllerProcessorCell = document.createElement('td');
-                        controllerProcessorCell.classList.add('controller-processor-cell');
-                        controllerProcessorCell.innerHTML = `
-                            <div><span class="legend">GCH:</span> <span class="data">${entry["gchControllerProcessor"]}</span></div>
-                            <div><span class="legend">Third Party:</span> <span class="data">${entry["thirdPartyControllerProcessor"]}</span></div>
-                            <div><span class="legend">Basis of Processing:</span> <span class="data">${entry["basisOfProcessing"]}</span></div>
-                            <div><span class="legend">Justification of Basis:</span> <span class="data">${entry["justificationOfBasis"]}</span></div>
-                            <div><span class="legend">Auto Decision Making:</span> <span class="data">${entry["automatedDecisionMaking"]}</span></div>
-                        `;
+                            // Controller Processor Cell
+                            const controllerProcessorCell = document.createElement('td');
+                            controllerProcessorCell.classList.add('controller-processor-cell');
+                            controllerProcessorCell.innerHTML = `
+                                <div><span class="legend">GCH:</span> <span class="data">${entry["gchControllerProcessor"]}</span></div>
+                                <div><span class="legend">Third Party:</span> <span class="data">${entry["thirdPartyControllerProcessor"]}</span></div>
+                                <div><span class="legend">Basis of Processing:</span> <span class="data">${entry["basisOfProcessing"]}</span></div>
+                                <div><span class="legend">Justification of Basis:</span> <span class="data">${entry["justificationOfBasis"]}</span></div>
+                                <div><span class="legend">Auto Decision Making:</span> <span class="data">${entry["automatedDecisionMaking"]}</span></div>
+                            `;
 
-                        // Protection Cell
-                        const protectionCell = document.createElement('td');
-                        protectionCell.classList.add('protection-cell');
-                        protectionCell.innerHTML = `
-                            <div><span class="legend">Storage:</span> <span class="data">${entry["storage"]}</span></div>
-                            <div><span class="legend">Transfer:</span> <span class="data">${entry["transfer"]}</span></div>
-                            <div><span class="legend">Transfer Mechanism:</span> <span class="data">${entry["transferMechanism"]}</span></div>
-                        `;
+                            // Protection Cell
+                            const protectionCell = document.createElement('td');
+                            protectionCell.classList.add('protection-cell');
+                            protectionCell.innerHTML = `
+                                <div><span class="legend">Storage:</span> <span class="data">${entry["storage"]}</span></div>
+                                <div><span class="legend">Duration:</span> <span class="data">${entry["storageDuration"]}</span></div>
+                                <div><span class="legend">Transfer:</span> <span class="data">${entry["transfer"]}</span></div>
+                                <div><span class="legend">Transfer Mechanism:</span> <span class="data">${entry["transferMechanism"]}</span></div>
+                            `;
 
-                        row.appendChild(badgeCell);
-                        row.appendChild(infoCell);
-                        row.appendChild(partiesCell);
-                        row.appendChild(controllerProcessorCell);
-                        row.appendChild(protectionCell);
+                            row.appendChild(badgeCell);
+                            row.appendChild(infoCell);
+                            row.appendChild(partiesCell);
+                            row.appendChild(controllerProcessorCell);
+                            row.appendChild(protectionCell);
 
-                        tableBody.appendChild(row);
+                            tableBody.appendChild(row);
 
-                    });
+                        });
+                    }
 
-                    hideColumns();
+                    
                 }
                 // Function to hide specific columns based on the index
                 function hideColumns() {
@@ -1610,6 +1693,8 @@
                     });
                 }
 
+
+             
 
             </script>
             

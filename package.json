@@ -1,4 +1,22 @@
 {
-    "name": "RoPA",
-    "main": "index.html"
-  }
+  "name": "ropa",
+  "main": "index.html",
+  "window": {
+    "frame": true,
+    "width": 1280,
+    "height": 1024
+  },
+  "dependencies": {
+    "database-js": "^3.0.11",
+    "database-js-json": "^1.2.1",
+    "nw": "^0.91.0"
+  },
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
